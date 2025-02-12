@@ -17,7 +17,7 @@ const FeaturedStrippers = async () => {
     }
     return (
       <>
-        <h2 className="text-4xl font-extrabold text-center my-10">
+        <h2 className="text-4xl font-extrabold text-center my-10 text-white">
           Featured Strippers in Los Angeles
         </h2>
 
