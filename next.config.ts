@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
-    domains: ["strippers.local"],
+    domains: ["strippers.local", "strippers.vercel.app"],
   },
 };
 
