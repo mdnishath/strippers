@@ -27,7 +27,7 @@ const AboutPage = () => {
               Welcome to the{" "}
               <strong>premier stripper agency in Los Angeles</strong>, offering
               the most talented and professional entertainers for all types of
-              events. Whether you're planning a{" "}
+              events. Whether you're planning a
               <strong>bachelor party, private event, or a fun night out</strong>
               , we bring the best experience to you.
             </p>
