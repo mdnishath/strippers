@@ -65,11 +65,11 @@ const Header = () => {
             Home
           </Link>
           <Link
-            href="/featured"
+            href="/strippers"
             className="block text-xl hover:text-red-500"
             onClick={toggleMenu}
           >
-            Featured Strippers
+            Strippers
           </Link>
           <Link
             href="/about"
