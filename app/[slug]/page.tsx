@@ -12,27 +12,38 @@ interface PageProps {
 }
 
 export default async function ProfilePage({ params }: PageProps) {
-  // ✅ Ensure `params` is available, no need to await, Next.js handles that.
+  // Extract slug from params
   const { slug } = params;
 
+  // Check if slug is present
   if (!slug) {
     return notFound();
   }
 
-  // Query the API with the slug
-  const { data } = await client.query({
-    query: GET_MALE_BY_SLUG,
-    variables: { slug },
-  });
+  let profileData;
+  try {
+    // Fetch the data using GraphQL query
+    const { data } = await client.query({
+      query: GET_MALE_BY_SLUG,
+      variables: { slug },
+    });
 
-  if (!data?.maleBy) {
-    return <h1 className="text-center text-2xl mt-10">Profile Not Found</h1>;
+    // Check if data exists
+    if (!data?.maleBy) {
+      return <h1 className="text-center text-2xl mt-10">Profile Not Found</h1>;
+    }
+
+    profileData = data.maleBy;
+  } catch (error) {
+    // Handle any errors that occur during the data fetch
+    console.error("Error fetching profile data:", error);
+    return <h1 className="text-center text-2xl mt-10">Error fetching data</h1>;
   }
 
-  const profile = data.maleBy as MaleProfile;
+  // Destructure the profile data
   const { profileImage, fullName, profileState, profileOutfits } =
-    profile.profile;
-  const { state, city } = profile.identity;
+    profileData.profile;
+  const { state, city } = profileData.identity;
 
   return (
     <div>
