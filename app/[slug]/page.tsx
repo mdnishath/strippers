@@ -14,7 +14,7 @@ interface PageProps {
 
 export default async function ProfilePage({ params }: PageProps) {
   // Directly use params.slug without awaiting it
-  const { slug } = params;
+  const { slug } = await params;
 
   if (!slug) {
     return notFound(); // Return 404 if no slug is present
