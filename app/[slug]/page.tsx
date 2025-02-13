@@ -9,12 +9,13 @@ import Container from "@/components/shared/Container";
 import { notFound } from "next/navigation";
 
 interface PageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>; // As params is a Promise
 }
 
 export default async function ProfilePage({ params }: PageProps) {
-  // Directly use params.slug without awaiting it
-  const { slug } = await params;
+  // Await the params promise to get the slug
+  const resolvedParams = await params;
+  const { slug } = resolvedParams;
 
   if (!slug) {
     return notFound(); // Return 404 if no slug is present
