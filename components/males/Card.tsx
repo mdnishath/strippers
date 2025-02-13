@@ -15,7 +15,7 @@ const Card: React.FC<CardProps> = ({ profile }) => {
   return (
     <div className="bg-[#1f2329] rounded-xl shadow-lg overflow-hidden hover:scale-105 transition-transform duration-300">
       {/* Profile Image */}
-      <Link href={`/males/${slug}`} className="block">
+      <Link href={`/${slug}`} className="block">
         <Image
           src={profileImage.node.mediaItemUrl}
           alt={profileImage.node.altText as string}
@@ -37,7 +37,7 @@ const Card: React.FC<CardProps> = ({ profile }) => {
 
         {/* CTA Button */}
         <Link
-          href={`/males/${slug}`}
+          href={`/${slug}`}
           className="mt-4 inline-block bg-[#ff3b3b] hover:bg-[#e62929] text-white px-6 py-3 rounded-lg font-semibold transition"
         >
           View Profile

@@ -14,7 +14,7 @@ export default {
         textPrimary: "#ffffff",
         textSecondary: "#b0b8c1",
         border: "#4CAF50",
-        accent: "#00C853",
+        accent: "#ff0000",
         accentHover: "#00FF7F",
         error: "#f44336",
         success: "#4CAF50",

@@ -44,7 +44,7 @@ const HeroSection = () => {
 
         {/* Service Area Info */}
         <p className="mt-6 text-sm md:text-base font-light">
-          Serving **Hollywood, Beverly Hills, Downtown LA & more!**
+          Serving <strong>Hollywood, Beverly Hills, Downtown LA & more!</strong>
         </p>
       </div>
     </section>
