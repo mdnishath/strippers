@@ -6,21 +6,24 @@ import { Button } from "@/components/ui/Button";
 import Image from "next/image";
 import { MaleProfile } from "@/types";
 import { IoLocationOutline } from "react-icons/io5";
+import { notFound } from "next/navigation";
 import { Accordion } from "@/components/ui/Accordion";
 import Container from "@/components/shared/Container";
-
-export default async function ProfilePage({
-  params,
-}: {
+interface PageProps {
   params: { slug: string };
-}) {
+}
+
+export default async function ProfilePage({ params }: PageProps) {
+  if (!params?.slug) {
+    return notFound();
+  }
   const { slug } = await Promise.resolve(params);
 
   const { data } = await client.query({
     query: GET_MALE_BY_SLUG,
-    variables: { slug },
+    variables: { slug: params.slug },
   });
-
+  console.log(data);
   if (!data?.maleBy) {
     return <h1 className="text-center text-2xl mt-10">Profile Not Found</h1>;
   }
