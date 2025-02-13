@@ -1,31 +1,27 @@
 import client from "@/lib/apollo-client";
 import { GET_MALE_BY_SLUG } from "@/lib/queries/getSingleMale";
-import { Card, CardContent } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import Image from "next/image";
 import { MaleProfile } from "@/types";
+import Image from "next/image";
 import { IoLocationOutline } from "react-icons/io5";
 import { notFound } from "next/navigation";
 import { Accordion } from "@/components/ui/Accordion";
 import Container from "@/components/shared/Container";
 
 interface PageProps {
-  params: { slug: string };
+  params: { slug: string }; // ✅ Ensure params is treated as an object, not a Promise
 }
 
 export default async function ProfilePage({ params }: PageProps) {
-  // ❌ No need to await params!
   if (!params?.slug) {
     return notFound();
   }
 
-  // Fetch data from GraphQL
+  // ✅ Use params.slug directly (no need for await Promise.resolve)
   const { data } = await client.query({
     query: GET_MALE_BY_SLUG,
-    variables: { slug: params.slug }, // ✅ Use params.slug directly
+    variables: { slug: params.slug },
   });
 
-  console.log(data);
   if (!data?.maleBy) {
     return <h1 className="text-center text-2xl mt-10">Profile Not Found</h1>;
   }
