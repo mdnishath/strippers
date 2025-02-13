@@ -13,11 +13,11 @@ interface PageProps {
 }
 
 export default async function ProfilePage({ params }: PageProps) {
-  // Ensure 'slug' is available in params and await its value
-  const { slug } = await params;
+  // Directly use params.slug without awaiting it
+  const { slug } = params;
 
   if (!slug) {
-    return notFound(); // Return a 404 if the slug is not found
+    return notFound(); // Return 404 if no slug is present
   }
 
   let profileData;
@@ -26,23 +26,23 @@ export default async function ProfilePage({ params }: PageProps) {
     // Fetch data based on slug
     const { data } = await client.query({
       query: GET_MALE_BY_SLUG,
-      variables: { slug }, // Directly use the awaited slug
+      variables: { slug },
     });
 
-    // Check if the data is present
+    // If no profile is found, return a message
     if (!data?.maleBy) {
       return <h1 className="text-center text-2xl mt-10">Profile Not Found</h1>;
     }
 
-    // Assign data to profileData
+    // Assign fetched data to profileData
     profileData = data.maleBy;
   } catch (error) {
-    // Handle any errors during data fetching
+    // Handle any errors that may occur during data fetching
     console.error("Error fetching profile data:", error);
     return <h1 className="text-center text-2xl mt-10">Error fetching data</h1>;
   }
 
-  // Extract profile details
+  // Destructure profile details
   const { profileImage, fullName, profileState, profileOutfits } =
     profileData.profile;
   const { state, city } = profileData.identity;
