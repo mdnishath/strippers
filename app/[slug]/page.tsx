@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+// app/[slug]/page.tsx
 import client from "@/lib/apollo-client";
 import { GET_MALE_BY_SLUG } from "@/lib/queries/getSingleMale";
 import { MaleProfile } from "@/types";
@@ -6,41 +6,43 @@ import Image from "next/image";
 import { IoLocationOutline } from "react-icons/io5";
 import { Accordion } from "@/components/ui/Accordion";
 import Container from "@/components/shared/Container";
+import { notFound } from "next/navigation";
 
 interface PageProps {
   params: { slug: string };
 }
 
 export default async function ProfilePage({ params }: PageProps) {
-  // Extract slug from params
-  const { slug } = params;
+  // Ensure 'slug' is available in params and await its value
+  const { slug } = await params;
 
-  // Check if slug is present
   if (!slug) {
-    return notFound();
+    return notFound(); // Return a 404 if the slug is not found
   }
 
   let profileData;
+
   try {
-    // Fetch the data using GraphQL query
+    // Fetch data based on slug
     const { data } = await client.query({
       query: GET_MALE_BY_SLUG,
-      variables: { slug },
+      variables: { slug }, // Directly use the awaited slug
     });
 
-    // Check if data exists
+    // Check if the data is present
     if (!data?.maleBy) {
       return <h1 className="text-center text-2xl mt-10">Profile Not Found</h1>;
     }
 
+    // Assign data to profileData
     profileData = data.maleBy;
   } catch (error) {
-    // Handle any errors that occur during the data fetch
+    // Handle any errors during data fetching
     console.error("Error fetching profile data:", error);
     return <h1 className="text-center text-2xl mt-10">Error fetching data</h1>;
   }
 
-  // Destructure the profile data
+  // Extract profile details
   const { profileImage, fullName, profileState, profileOutfits } =
     profileData.profile;
   const { state, city } = profileData.identity;
