@@ -1,25 +1,28 @@
+import { notFound } from "next/navigation";
 import client from "@/lib/apollo-client";
 import { GET_MALE_BY_SLUG } from "@/lib/queries/getSingleMale";
 import { MaleProfile } from "@/types";
 import Image from "next/image";
 import { IoLocationOutline } from "react-icons/io5";
-import { notFound } from "next/navigation";
 import { Accordion } from "@/components/ui/Accordion";
 import Container from "@/components/shared/Container";
 
 interface PageProps {
-  params: { slug: string }; // ✅ Ensure params is treated as an object, not a Promise
+  params: { slug: string };
 }
 
 export default async function ProfilePage({ params }: PageProps) {
-  if (!params?.slug) {
+  // ✅ Ensure `params` is available, no need to await, Next.js handles that.
+  const { slug } = params;
+
+  if (!slug) {
     return notFound();
   }
 
-  // ✅ Use params.slug directly (no need for await Promise.resolve)
+  // Query the API with the slug
   const { data } = await client.query({
     query: GET_MALE_BY_SLUG,
-    variables: { slug: params.slug },
+    variables: { slug },
   });
 
   if (!data?.maleBy) {
